@@ -708,10 +708,10 @@
     webpack "5.90.1"
     webpack-node-externals "3.0.0"
 
-"@nestjs/common@^10.0.0":
-  version "10.3.3"
-  resolved "https://registry.npmjs.org/@nestjs/common/-/common-10.3.3.tgz"
-  integrity sha512-LAkTe8/CF0uNWM0ecuDwUNTHCi1lVSITmmR4FQ6Ftz1E7ujQCnJ5pMRzd8JRN14vdBkxZZ8VbVF0BDUKoKNxMQ==
+"@nestjs/common@^10.3.4":
+  version "10.3.4"
+  resolved "https://registry.npmjs.org/@nestjs/common/-/common-10.3.4.tgz"
+  integrity sha512-HmehujZhUZjf9TN2o0TyzWYNwEgyRYqZZ5qIcF/mCgIUZ4olIKlazna0kGK56FGlCvviHWNKQM5eTuVeTstIgA==
   dependencies:
     uid "2.0.2"
     iterare "1.2.1"
@@ -765,7 +765,7 @@
 
 "@nestjs/typeorm@^10.0.2":
   version "10.0.2"
-  resolved "https://registry.yarnpkg.com/@nestjs/typeorm/-/typeorm-10.0.2.tgz#25e3ec3c9a127b085c06fd7ea25f8690dba145c2"
+  resolved "https://registry.npmjs.org/@nestjs/typeorm/-/typeorm-10.0.2.tgz"
   integrity sha512-H738bJyydK4SQkRCTeh1aFBxoO1E9xdL/HaLGThwrqN95os5mEyAtK7BLADOS+vldP4jDZ2VQPLj4epWwRqCeQ==
   dependencies:
     uuid "9.0.1"
@@ -938,7 +938,7 @@
     "@types/range-parser" "*"
     "@types/send" "*"
 
-"@types/express@^4.17.17":
+"@types/express@*", "@types/express@^4.17.17":
   version "4.17.21"
   resolved "https://registry.npmjs.org/@types/express/-/express-4.17.21.tgz"
   integrity sha512-ejlPM315qwLpaQlQDTjPdsUFSc6ZsP4AN6AlWnogPjQ7CVi7PYF3YVz+CY3jE2pwYf7E/7HlDAN0rV2GxTG0HQ==
@@ -1006,6 +1006,13 @@
   version "1.3.5"
   resolved "https://registry.npmjs.org/@types/mime/-/mime-1.3.5.tgz"
   integrity sha512-/pyBZWSLD2n0dcHE3hq8s8ZvcETHtEuF+3E7XVt0Ig2nvsVQXdghHVcEkIWjy9A0wKfTn97a/PSDYohKIlnP/w==
+
+"@types/multer@^1.4.11":
+  version "1.4.11"
+  resolved "https://registry.npmjs.org/@types/multer/-/multer-1.4.11.tgz"
+  integrity sha512-svK240gr6LVWvv3YGyhLlA+6LRRWA4mnGIU7RcNmgjBYFl6665wcXrRfxGp5tEPVHUNm5FMcmq7too9bxCwX/w==
+  dependencies:
+    "@types/express" "*"
 
 "@types/node@*", "@types/node@^20.3.1":
   version "20.11.20"
@@ -1999,6 +2006,18 @@ cross-spawn@^7.0.0, cross-spawn@^7.0.2, cross-spawn@^7.0.3:
     path-key "^3.1.0"
     shebang-command "^2.0.0"
     which "^2.0.1"
+
+csv-parse@^5.5.5:
+  version "5.5.5"
+  resolved "https://registry.npmjs.org/csv-parse/-/csv-parse-5.5.5.tgz"
+  integrity sha512-erCk7tyU3yLWAhk6wvKxnyPtftuy/6Ak622gOO7BCJ05+TYffnPCJF905wmOQm+BpkX54OdAl8pveJwUdpnCXQ==
+
+csv-parser@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.npmjs.org/csv-parser/-/csv-parser-3.0.0.tgz"
+  integrity sha512-s6OYSXAK3IdKqYO33y09jhypG/bSDHPuyCme/IdEHfWpLf/jKcpitVFyOC6UemgGk8v7Q5u2XE0vvwmanxhGlQ==
+  dependencies:
+    minimist "^1.2.0"
 
 dayjs@^1.11.9:
   version "1.11.10"
@@ -3748,7 +3767,7 @@ minimatch@^8.0.2:
   dependencies:
     brace-expansion "^2.0.1"
 
-minimist@^1.2.6:
+minimist@^1.2.0, minimist@^1.2.6:
   version "1.2.8"
   resolved "https://registry.npmjs.org/minimist/-/minimist-1.2.8.tgz"
   integrity sha512-2yyAR8qBkN3YuheJanUpWC5U3bb5osDywNB8RzDVlDwDHbocAJveqqj1u8+SVD7jkWT4yvsHCpWqqWqAxb0zCA==
@@ -3815,7 +3834,7 @@ mute-stream@1.0.0:
 
 mysql2@^3.9.2:
   version "3.9.2"
-  resolved "https://registry.npmjs.org/mysql2/-/mysql2-3.9.2.tgz"
+  resolved "https://registry.yarnpkg.com/mysql2/-/mysql2-3.9.2.tgz#567343581f9742032598b6c15bd7aa65d2f7d4af"
   integrity sha512-3Cwg/UuRkAv/wm6RhtPE5L7JlPB877vwSF6gfLAS68H+zhH+u5oa3AieqEd0D0/kC3W7qIhYbH419f7O9i/5nw==
   dependencies:
     denque "^2.1.0"
@@ -4910,7 +4929,7 @@ typedarray@^0.0.6:
 
 typeorm@^0.3.20:
   version "0.3.20"
-  resolved "https://registry.npmjs.org/typeorm/-/typeorm-0.3.20.tgz"
+  resolved "https://registry.yarnpkg.com/typeorm/-/typeorm-0.3.20.tgz#4b61d737c6fed4e9f63006f88d58a5e54816b7ab"
   integrity sha512-sJ0T08dV5eoZroaq9uPKBoNcGslHBR4E4y+EBHs//SiGbblGe7IeduP/IH4ddCcj0qp3PHwDwGnuvqEAnKlq/Q==
   dependencies:
     "@sqltools/formatter" "^1.2.5"

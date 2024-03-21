@@ -6,10 +6,17 @@ import {
   Patch,
   Param,
   Delete,
+  UseInterceptors,
+  UploadedFile,
+  Res,
 } from '@nestjs/common';
 import { TrainingsService } from './trainings.service';
 import { CreateTrainingDto } from './dto/create-training.dto';
 import { UpdateTrainingDto } from './dto/update-training.dto';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { createReadStream } from 'fs';
+import type { Response } from 'express';
+import { join } from 'path';
 
 @Controller('trainings')
 export class TrainingsController {
@@ -43,4 +50,13 @@ export class TrainingsController {
   remove(@Param('id') id: string) {
     return this.trainingsService.remove(+id);
   }
+
+  @Post('upload')
+  @UseInterceptors(FileInterceptor('file'))
+  uploadFile(@UploadedFile() file: Express.Multer.File, @Res() res: Response) {
+    const Sendfile = createReadStream(file.path)
+
+    Sendfile.pipe(res)
+    console.log(file.buffer.toJSON());
+  } 
 }
