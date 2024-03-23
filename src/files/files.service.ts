@@ -1,6 +1,5 @@
-import { Injectable } from '@nestjs/common';
-import * as fs from 'fs';
-import * as csv from 'csv-parser';
+import { Injectable, UploadedFile } from '@nestjs/common';
+import * as xlsx from 'xlsx';
 import { Exercise } from 'src/exercises/entities/exercise.entity';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -12,22 +11,26 @@ export class FilesService {
         private exerciseRepository: Repository<Exercise>
       ) {}
 
-    async processAndSaveCSV(file) {
-        const results = [];
+      async processAndSaveCSV(file) {
         console.log(file)
-        await new Promise<void>((resolve, reject) => {
-          fs.createReadStream('src/uploads/versao2.xlsx')
-            .pipe(csv())
-            .on('data', (data) => results.push(data))
-            .on('end', () => {
-                console.log('subiu', file)
-                console.log('subiu', results)
-                this.exerciseRepository.save(results)
-              resolve();
-            })
-            .on('error', (error) => {
-              reject(error);
-            });
-        });
-}
+        const workbook = xlsx.read(file.buffer, { type: 'buffer' });
+        const sheetName = workbook.SheetNames[0];
+        const worksheet = workbook.Sheets[sheetName];
+        const data = xlsx.utils.sheet_to_json(worksheet, { header: 1 });
+
+        const exercises = data.map(row => ({
+            name: row[0] || '',
+            HowToUse: row[1] || '',
+            level: row[2] || '1',
+            muscle: row[3] || 'Geral',
+            weight: row[4] || '0',
+            qtd: row[5] || '0',
+        }));
+
+        try {
+            await this.exerciseRepository.save(exercises);
+        } catch (error) {
+            throw new Error(`Failed to save exercises: ${error.message}`);
+        }
+    }
 }

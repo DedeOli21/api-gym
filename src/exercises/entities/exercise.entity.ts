@@ -5,22 +5,22 @@ export class Exercise {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ default: 'Nome Padrão' })
+  @Column()
   name: string;
 
-  @Column({ default: 'Nome Padrão' })
+  @Column()
   HowToUse: string;
 
-  @Column({ default: 'Nome Padrão' })
+  @Column()
   level: string;
 
-  @Column({ default: 'Nome Padrão' })
+  @Column()
   muscle: string;
 
-  @Column({ default: 'Nome Padrão' })
+  @Column()
   weight: string;
 
-  @Column({ default: 'Nome Padrão' })
+  @Column()
   qtd: string;
   
 }
