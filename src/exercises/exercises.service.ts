@@ -5,16 +5,9 @@ import { UpdateExerciseDto } from './dto/update-exercise.dto';
 import { Exercise } from './entities/exercise.entity';
 import { Repository } from 'typeorm';
 
-export interface IExercisesService {
-  create(createExerciseDto: CreateExerciseDto);
-  findAll();
-  findOne(id: number);
-  update(id: number, updateExerciseDto: UpdateExerciseDto);
-  remove(id: number);
-}
 
 @Injectable()
-export class ExercisesService implements IExercisesService {
+export class ExercisesService {
   constructor(
     @InjectRepository(Exercise)
     private exerciseRepository: Repository<Exercise>,
