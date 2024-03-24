@@ -5,7 +5,12 @@ import { UpdateUserDto } from './dto/update-user.dto';
 @Injectable()
 export class UsersService {
   create(createUserDto: CreateUserDto) {
-    return 'This action adds a new user';
+    try {
+      if(createUserDto.password !== createUserDto.confirmPassword) throw new Error('must be equal password')
+      return createUserDto
+    } catch (error) {
+      throw error
+    }
   }
 
   findAll() {

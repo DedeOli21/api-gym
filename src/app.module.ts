@@ -10,6 +10,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Exercise } from './exercises/entities/exercise.entity';
 import { MulterModule } from '@nestjs/platform-express';
 import { FilesModule } from './files/files.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -32,6 +33,7 @@ import { FilesModule } from './files/files.module';
     MulterModule.register({
       dest: './uploads'
     }),
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
