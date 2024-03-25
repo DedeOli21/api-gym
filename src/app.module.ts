@@ -11,20 +11,31 @@ import { Exercise } from './exercises/entities/exercise.entity';
 import { MulterModule } from '@nestjs/platform-express';
 import { FilesModule } from './files/files.module';
 import { AuthModule } from './auth/auth.module';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import { APP_GUARD } from '@nestjs/core';
+import { JwtGuard } from './auth/guards/jwt.guard';
+import { JwtStrategy } from './auth/strategy/jwt.strategy';
+import { User } from './users/entities/user.entity';
 
 @Module({
   imports: [
-    TypeOrmModule.forRoot({
-      type: 'mysql',
-      host: 'localhost',
-      port: 3306,
-      username: 'root',
-      password: 'root',
-      database: 'api_gym',
-      entities: [Exercise],
-      synchronize: true,
+    ConfigModule.forRoot({ isGlobal: true }),
+    TypeOrmModule.forRootAsync({
+      imports: [ConfigModule],
+      useFactory: async (ConfigService: ConfigService) => ({
+        type: 'mysql',
+        host: 'localhost',
+        port: 3306,
+        username: 'root',
+        password: 'root',
+        database: 'api_gym',
+        autoLoadEntities: true,
+        synchronize: true,
+      }),
+      inject: [ConfigService]
     }),
     UsersModule,
+    AuthModule,
     TeachersModule,
     ExercisesModule,
     TrainingsModule,
@@ -33,9 +44,13 @@ import { AuthModule } from './auth/auth.module';
     MulterModule.register({
       dest: './uploads'
     }),
-    AuthModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, {
+    provide: APP_GUARD,
+    useClass: JwtGuard,
+  },
+  JwtStrategy,
+],
 })
 export class AppModule {}

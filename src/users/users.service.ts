@@ -1,31 +1,38 @@
 import { Injectable } from '@nestjs/common';
-import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository, UpdateResult } from 'typeorm';
+import { User } from './entities/user.entity';
+import { UUID } from 'crypto';
 
 @Injectable()
 export class UsersService {
-  create(createUserDto: CreateUserDto) {
+  constructor(
+    @InjectRepository(User)
+    private usersRepository: Repository<User>,
+  ) {}
+
+  async findOneByEmail(email: string): Promise<User | null> {
     try {
-      if(createUserDto.password !== createUserDto.confirmPassword) throw new Error('must be equal password')
-      return createUserDto
+      console.log(email)
+      const result = await this.usersRepository.findOne({ where: { email } });
+      if(result instanceof Error) throw new Error()
+      return result
+      
     } catch (error) {
-      throw error
+      console.log(error)
+      return null
     }
   }
 
-  findAll() {
-    return `This action returns all users`;
+  findOneById(id: UUID): Promise<User | null> {
+    return this.usersRepository.findOneBy({ id });
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} user`;
+  create(user: User): Promise<User> {
+    return this.usersRepository.save(user);
   }
 
-  update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} user`;
+  update(userId: UUID, userInformation: Partial<User>): Promise<UpdateResult> {
+    return this.usersRepository.update(userId, userInformation);
   }
 }
