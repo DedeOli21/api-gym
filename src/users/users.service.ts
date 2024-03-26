@@ -1,15 +1,18 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository, UpdateResult } from 'typeorm';
+import { DataSource, Repository, UpdateResult } from 'typeorm';
 import { User } from './entities/user.entity';
 import { UUID } from 'crypto';
 
 @Injectable()
-export class UsersService {
+export class UsersService extends Repository<User> {
   constructor(
     @InjectRepository(User)
     private usersRepository: Repository<User>,
-  ) {}
+    private dataSource: DataSource
+  ) {
+    super(User, dataSource.createEntityManager())
+  }
 
   async findOneByEmail(email: string): Promise<User | null> {
     try {
@@ -28,9 +31,9 @@ export class UsersService {
     return this.usersRepository.findOneBy({ id });
   }
 
-  create(user: User): Promise<User> {
-    return this.usersRepository.save(user);
-  }
+  // create(user: User): Promise<User> {
+  //   return this.usersRepository.save(user);
+  // }
 
   update(userId: UUID, userInformation: Partial<User>): Promise<UpdateResult> {
     return this.usersRepository.update(userId, userInformation);

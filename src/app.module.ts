@@ -20,16 +20,18 @@ import { User } from './users/entities/user.entity';
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
+    TypeOrmModule.forFeature([User]),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
-      useFactory: async (ConfigService: ConfigService) => ({
+      useFactory: async (configService: ConfigService) => ({
         type: 'mysql',
-        host: 'localhost',
-        port: 3306,
-        username: 'root',
-        password: 'root',
-        database: 'api_gym',
+        host: configService.get<string>('DB_HOST'),
+        port: configService.get<number>('DB_PORT'),
+        username: configService.get<string>('DB_USER'),
+        password: configService.get<string>('DB_PASSWORD'),
+        database: configService.get<string>('DB_NAME'),
         autoLoadEntities: true,
+        entities: [User],
         synchronize: true,
       }),
       inject: [ConfigService]
