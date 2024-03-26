@@ -15,6 +15,7 @@ import { APP_GUARD } from '@nestjs/core';
 import { JwtGuard } from './auth/guards/jwt.guard';
 import { JwtStrategy } from './auth/strategy/jwt.strategy';
 import { User } from './users/users.entity';
+import { StudentsModule } from './students/students.module';
 
 @Module({
   imports: [
@@ -43,6 +44,7 @@ import { User } from './users/users.entity';
     MulterModule.register({
       dest: './uploads',
     }),
+    StudentsModule,
   ],
   controllers: [AppController],
   providers: [
