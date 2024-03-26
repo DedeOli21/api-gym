@@ -5,9 +5,7 @@ import { Exercise } from 'src/exercises/entities/exercise.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
 @Module({
-  imports: [
-    TypeOrmModule.forFeature([Exercise])
-  ],
+  imports: [TypeOrmModule.forFeature([Exercise])],
   controllers: [FilesController],
   providers: [FilesService],
 })

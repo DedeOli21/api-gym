@@ -22,5 +22,4 @@ export class Exercise {
 
   @Column()
   qtd: string;
-  
 }
