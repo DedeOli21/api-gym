@@ -9,21 +9,20 @@ export class UsersService extends Repository<User> {
   constructor(
     @InjectRepository(User)
     private usersRepository: Repository<User>,
-    private dataSource: DataSource
+    private dataSource: DataSource,
   ) {
-    super(User, dataSource.createEntityManager())
+    super(User, dataSource.createEntityManager());
   }
 
   async findOneByEmail(email: string): Promise<User | null> {
     try {
-      console.log(email)
+      console.log(email);
       const result = await this.usersRepository.findOne({ where: { email } });
-      if(result instanceof Error) throw new Error()
-      return result
-      
+      if (result instanceof Error) throw new Error();
+      return result;
     } catch (error) {
-      console.log(error)
-      return null
+      console.log(error);
+      return null;
     }
   }
 

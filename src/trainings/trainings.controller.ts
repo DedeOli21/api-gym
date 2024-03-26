@@ -54,9 +54,9 @@ export class TrainingsController {
   @Post('upload')
   @UseInterceptors(FileInterceptor('file'))
   uploadFile(@UploadedFile() file: Express.Multer.File, @Res() res: Response) {
-    const Sendfile = createReadStream(file.path)
+    const Sendfile = createReadStream(file.path);
 
-    Sendfile.pipe(res)
+    Sendfile.pipe(res);
     console.log(file.buffer.toJSON());
-  } 
+  }
 }

@@ -5,7 +5,6 @@ import { UpdateExerciseDto } from './dto/update-exercise.dto';
 import { Exercise } from './entities/exercise.entity';
 import { Repository } from 'typeorm';
 
-
 @Injectable()
 export class ExercisesService {
   constructor(

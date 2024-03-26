@@ -34,7 +34,7 @@ import { User } from './users/entities/user.entity';
         entities: [User],
         synchronize: true,
       }),
-      inject: [ConfigService]
+      inject: [ConfigService],
     }),
     UsersModule,
     AuthModule,
@@ -44,15 +44,17 @@ import { User } from './users/entities/user.entity';
     ClientsModule,
     FilesModule,
     MulterModule.register({
-      dest: './uploads'
+      dest: './uploads',
     }),
   ],
   controllers: [AppController],
-  providers: [AppService, {
-    provide: APP_GUARD,
-    useClass: JwtGuard,
-  },
-  JwtStrategy,
-],
+  providers: [
+    AppService,
+    {
+      provide: APP_GUARD,
+      useClass: JwtGuard,
+    },
+    JwtStrategy,
+  ],
 })
 export class AppModule {}

@@ -1,6 +1,6 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
-@Entity({ name: 'User'})
+@Entity()
 export class Exercise {
   @PrimaryGeneratedColumn()
   id: number;
@@ -22,5 +22,4 @@ export class Exercise {
 
   @Column()
   qtd: string;
-  
 }
