@@ -29,7 +29,6 @@ export class AuthController {
   async register(
     @Body() registerBody: RegisterRequestDto,
   ): Promise<RegisterResponseDTO | BadRequestException> {
-    console.log(registerBody);
     return await this.authService.register(registerBody);
   }
 }

@@ -5,7 +5,6 @@ import { UsersModule } from './users/users.module';
 import { TeachersModule } from './teachers/teachers.module';
 import { ExercisesModule } from './exercises/exercises.module';
 import { TrainingsModule } from './trainings/trainings.module';
-import { ClientsModule } from './clients/clients.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Exercise } from './exercises/entities/exercise.entity';
 import { MulterModule } from '@nestjs/platform-express';
@@ -20,7 +19,6 @@ import { User } from './users/entities/user.entity';
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
-    TypeOrmModule.forFeature([User]),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
       useFactory: async (configService: ConfigService) => ({
@@ -31,7 +29,7 @@ import { User } from './users/entities/user.entity';
         password: configService.get<string>('DB_PASSWORD'),
         database: configService.get<string>('DB_NAME'),
         autoLoadEntities: true,
-        entities: [User],
+        entities: [User, Exercise],
         synchronize: true,
       }),
       inject: [ConfigService],
@@ -41,7 +39,6 @@ import { User } from './users/entities/user.entity';
     TeachersModule,
     ExercisesModule,
     TrainingsModule,
-    ClientsModule,
     FilesModule,
     MulterModule.register({
       dest: './uploads',
