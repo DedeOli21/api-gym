@@ -1,20 +1,54 @@
 # Use a imagem base, por exemplo, uma distribuição Linux como o Ubuntu
 FROM ubuntu:latest
 
-# Atualize o índice de pacotes e instale o SSH
-RUN apt-get update && apt-get install -y openssh-server
+# Atualize o índice de pacotes e instale os pacotes necessários
+RUN apt-get update && \
+    apt-get install -y \
+        curl \
+        gnupg
 
-# Configure a senha do usuário root para "password" (Isso é apenas para fins de demonstração, não é recomendado em produção)
-RUN echo 'root:password' | chpasswd
+# Instale o MySQL
+RUN apt-get update && \
+    apt-get install -y \
+        mysql-server
 
-# Permita login via SSH
-RUN sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config
+# Instale o Node.js
+RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - && \
+    apt-get install -y nodejs
 
-# Limpe o cache de pacotes para reduzir o tamanho final da imagem
-RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+# Instale o Nest.js globalmente
+RUN npm install -g @nestjs/cli
 
-# Exponha a porta 22 para permitir conexões SSH
-EXPOSE 22
+# Copie o código-fonte da sua aplicação
+WORKDIR /app
+COPY . .
 
-# Inicie o serviço SSH quando o contêiner for iniciado
-CMD ["/usr/sbin/sshd", "-D"]
+# Instale as dependências da aplicação
+RUN npm install
+
+# Instale as ferramentas de compilação e dependências necessárias
+RUN apt-get update && \
+    apt-get install -y \
+        build-essential \
+        python2
+
+# Reinstale o bcrypt dentro do contêiner
+RUN npm uninstall bcrypt && \
+    npm install bcrypt
+
+# Exponha a porta da sua aplicação
+EXPOSE 3000
+
+# Configuração do MySQL (substitua as variáveis de ambiente pelos valores apropriados)
+ENV MYSQL_HOST=localhost
+ENV MYSQL_PORT=3306
+ENV MYSQL_USER=root
+ENV MYSQL_PASSWORD=root
+ENV MYSQL_DATABASE=api_gym
+
+# Configuração do WebSocket (se necessário)
+# Exemplo:
+# EXPOSE 8080
+
+# Inicie sua aplicação (substitua este comando pelo comando real para iniciar sua aplicação)
+CMD ["npm", "start"]

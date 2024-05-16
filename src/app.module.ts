@@ -16,6 +16,7 @@ import { JwtGuard } from './auth/guards/jwt.guard';
 import { JwtStrategy } from './auth/strategy/jwt.strategy';
 import { User } from './users/users.entity';
 import { StudentsModule } from './students/students.module';
+import { ChatGateway } from './chat/chat.gateway';
 
 @Module({
   imports: [
@@ -54,6 +55,7 @@ import { StudentsModule } from './students/students.module';
       useClass: JwtGuard,
     },
     JwtStrategy,
+    ChatGateway,
   ],
 })
 export class AppModule {}
